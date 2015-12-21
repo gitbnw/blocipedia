@@ -10,8 +10,14 @@
 <body>
    <div class="container">
      <ul class="nav nav-tabs">
-       <li><%= link_to "Bloccit", welcome_index_path %></li>
+       <li><%= link_to "Blocipedia", welcome_index_path %></li>
        <li><%= link_to "About", welcome_about_path %></li>
+       <% if current_user %>
+       <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+       <% else %>
+       <li><%= link_to('Login', new_user_session_path)  %></li>
+       <li><%= link_to('Register', new_user_registration_path)  %></li>
+       <% end %>
      </ul>
     <p class ="notice"><%= notice %></p>
     <p class ="alert"><%= alert %></p>
