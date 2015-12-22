@@ -1,0 +1,31 @@
+ <h1>Edit Wiki</h1>
+ 
+ <div class="row">
+   <div class="col-md-4">
+     <p>Guidelines for wikis</p>
+     <ul>
+       <li>Wikipedia articles, and other encyclopedic content, should be written in a formal tone.</li>
+       <li>Make your article accessible and understandable for as many readers as possible.</li>
+       <li>State facts that may be obvious to you, but are not necessarily obvious to the reader.</li>
+     </ul>
+   </div>
+   <div class="col-md-8">
+     <%= form_for @wiki do |f| %>
+       <div class="form-group">
+         <%= f.label :title %>
+         <%= f.text_field :title, class: 'form-control', placeholder: "Enter post title" %>
+       </div>
+       <div class="form-group">
+         <%= f.label :body %>
+         <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter post body" %>
+       </div>
+       <div class="form-group">
+       <%= f.label :private %>
+       <%= select("wiki", "private", [['True', true], ['False', false]], {}, { :class => 'form-control' })  %>       
+       </div>       
+       <div class="form-group">
+         <%= f.submit "Save", class: 'btn btn-success' %>
+       </div>
+     <% end %>
+   </div>
+ </div>
