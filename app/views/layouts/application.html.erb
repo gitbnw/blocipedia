@@ -12,8 +12,8 @@
      <ul class="nav nav-tabs">
        <li><%= link_to "Blocipedia", root_path %></li>
        <li><%= link_to "About", about_path %></li>
-       <li><%= link_to "Wikis", wikis_path %></li>
        <% if current_user %>
+       <li><%= link_to "Wikis", wikis_path %></li>
        <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
        <% else %>
        <li><%= link_to('Login', new_user_session_path)  %></li>
