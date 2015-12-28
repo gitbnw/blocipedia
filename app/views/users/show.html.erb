@@ -1,10 +1,14 @@
  <h1><%= @user.email %></h1>
- 
+
  <div class="row">
    <div class="col-md-6">
      <p><%= @user.role %></p>
    </div>
    <div class="col-md-6">
-     <%= render "charges/new"  %>  
+     <% if @user.standard? %>
+     <%= render "charges/new"  %>
+     <% elsif @user.premium? %>
+     <%= render "users/downgrade"  %>
+     <% end %>
    </div>
  </div>
