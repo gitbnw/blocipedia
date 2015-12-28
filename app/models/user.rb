@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   enum role: [:standard, :premium, :admin]
-
+  
     after_initialize :init
 
     def init

@@ -1,26 +1,32 @@
 class WikisController < ApplicationController
   
   before_action :authenticate_user!
+  after_action :verify_authorized, :except => :index
+  after_action :verify_policy_scoped, :only => :index
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   
   def index
-    @wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def new
     @wiki = Wiki.new
+    authorize @wiki
   end
   
-   def create
+  def create
 
      @wiki = Wiki.new
      @wiki.title = params[:wiki][:title]
      @wiki.body = params[:wiki][:body]
      @wiki.private = params[:wiki][:private]
-
+     
+     authorize @wiki
 
      if @wiki.save
 
@@ -31,10 +37,11 @@ class WikisController < ApplicationController
        flash.now[:alert] = "There was an error saving the Wiki. Please try again."
        render :new
      end
-   end
+  end
    
   def edit
-    @wiki = Wiki.find(params[:id])    
+    @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
    def update
@@ -42,6 +49,8 @@ class WikisController < ApplicationController
      @wiki.title = params[:wiki][:title]
      @wiki.body = params[:wiki][:body]
      @wiki.private = params[:wiki][:private]
+     
+     authorize @wiki
  
      if @wiki.save
        flash[:notice] = "Wiki was updated."
@@ -53,6 +62,8 @@ class WikisController < ApplicationController
    end
    def destroy
      @wiki = Wiki.find(params[:id])
+     
+     authorize @wiki
  
      if @wiki.destroy
        flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
@@ -62,4 +73,12 @@ class WikisController < ApplicationController
        render :show
      end
    end    
+   
+  private
+
+  def user_not_authorized
+    flash[:error] = "You are not authorized to perform this action."
+    redirect_to(request.referrer || root_path)
+  end
+  
 end

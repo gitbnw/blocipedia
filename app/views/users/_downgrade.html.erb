@@ -1,4 +1,3 @@
 <%= form_tag charges_path do %>
-  <h4>Downgrade :(</h4>
-  <%= link_to "Downgrade", user_path, :method => :patch %>
+  <%= link_to "Downgrade", user_path, :method => :patch, data: { confirm: "Noooooo...." }, class: "btn btn-primary" %>
 <% end %>
