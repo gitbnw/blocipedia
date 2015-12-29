@@ -5,10 +5,10 @@
     <% policy_scope(@wikis).each do |wiki| %>
       <div class="media">
         <div class="media-body">
-          <h4 class="media-heading">
-            <%= link_to wiki.title, wiki %>
+          <div class="media-heading">
+            <%= link_to wiki.title, wiki, class: "index-link" %>
             <%= render 'wikis/privacy', wiki: wiki %> 
-          </h4>
+            </div> 
         </div>
       </div>   
     <% end %>
