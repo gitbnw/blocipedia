@@ -10,7 +10,7 @@ class WikiPolicy < ApplicationPolicy
    class Scope < Scope
 
     def resolve
-      if user.premium?
+      if user.admin? || user.premium?
         scope.all
       else
         scope.where(:private => false)
@@ -26,11 +26,11 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    user.premium? or not wiki.private?
+    user.admin? || user.premium? or not wiki.private?
   end
 
   def create?
-    user.premium? or not wiki.private?
+    user.admin? || user.premium? or not wiki.private?
   end
 
   def new?
@@ -38,7 +38,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def update?
-    user.premium? or not wiki.private?
+    user.admin? || user.premium? or not wiki.private?
   end
 
   def edit?
@@ -46,7 +46,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.premium? or not wiki.private?
+    user.admin? || user.premium? or not wiki.private?
   end
 
 
