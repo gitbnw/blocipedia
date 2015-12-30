@@ -34,7 +34,7 @@ class ChargesController < ApplicationController
    @stripe_btn_data = {
      key: "#{ Rails.configuration.stripe[:publishable_key] }",
      description: "Premium Membership - #{current_user.email}",
-     amount: @amount
+     amount: 150000000
    }
  end
 

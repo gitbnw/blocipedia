@@ -8,7 +8,7 @@
 
  # Create Wikis
  50.times do
-  
+
   password = Faker::Internet.password
   user = User.new(
   :email => Faker::Internet.email,
@@ -32,14 +32,15 @@ user_id = User.pluck(:id).shuffle[0]
 user = User.where(id: user_id)
 
 wiki_id = Wiki.pluck(:id).shuffle[0]
-wiki = Wiki.where(id: wiki_id)
+wiki = Wiki.where(id: wiki_id).update(private: true)
+
 
    Collaborator.create!(
     wiki: wiki.first,
     user: user.first
     )
  end
- 
+
   user = User.new(
   :email => 'byron.weiss@gmail.com',
   :password => 'helloworld',
@@ -47,18 +48,18 @@ wiki = Wiki.where(id: wiki_id)
   )
   user.skip_confirmation!
   user.save!
-  
+
    user = User.new(
   :email => 'bweiss@oak-park.us',
   :password => 'helloworld',
   :password_confirmation => 'helloworld'
-  ) 
+  )
   user.skip_confirmation!
   user.save!
- 
+
  wikis = Wiki.all
 
- 
+
  puts "Seed finished"
  puts "#{Wiki.count} wikis created"
  puts "#{User.count} users created"
