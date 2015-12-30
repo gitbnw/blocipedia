@@ -27,8 +27,17 @@ title = Faker::Lorem.word
      body:   paragraphs.join("\r\n\r\n"),
      private: false,
      user: user
-     
    )
+user_id = User.pluck(:id).shuffle[0]
+user = User.where(id: user_id)
+
+wiki_id = Wiki.pluck(:id).shuffle[0]
+wiki = Wiki.where(id: wiki_id)
+
+   Collaborator.create!(
+    wiki: wiki.first,
+    user: user.first
+    )
  end
  
   user = User.new(
@@ -38,6 +47,14 @@ title = Faker::Lorem.word
   )
   user.skip_confirmation!
   user.save!
+  
+   user = User.new(
+  :email => 'bweiss@oak-park.us',
+  :password => 'helloworld',
+  :password_confirmation => 'helloworld'
+  ) 
+  user.skip_confirmation!
+  user.save!
  
  wikis = Wiki.all
 
@@ -45,3 +62,4 @@ title = Faker::Lorem.word
  puts "Seed finished"
  puts "#{Wiki.count} wikis created"
  puts "#{User.count} users created"
+ puts "#{Collaborator.count} collaborators created"

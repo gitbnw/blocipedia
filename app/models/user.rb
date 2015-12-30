@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  has_many :wiki
+  has_many :collaborators
+  has_many :wikis, through: :collaborators
+  
   
   enum role: [:standard, :premium, :admin]
   

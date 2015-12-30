@@ -10,15 +10,37 @@ class WikiPolicy < ApplicationPolicy
    class Scope < Scope
 
     def resolve
-      if user.admin? || user.premium?
-        scope.all
+      if user.admin?
+        scope.all # if the user is an admin, show them all the wikis
       else
-        scope.where(:private => false)
+
+        # scope.where(:user_id => user.collaborators.select(:wiki_id))
+        
+        t = Wiki.arel_table
+        
+        results = Wiki.where(
+          t[:user_id].eq(user.collaborators.select(:user_id)).
+          or(t[:private].eq(false)).
+          or(t[:user_id].eq(user))
+        )
+        results
+        # all_wikis = scope.all
+        
+        # ws = []
+        
+        # all_wikis.each do |w|
+        #   if w.private == false || wiki.user == user || wiki.users.include?(user)
+        #     ws << w.first # if the user is premium, only show them public wikis, or that private wikis they created, or private wikis they are a collaborator on
+        #   end
+        # end
+        # ws = ws.to_a
+        # wikis = ws
+        # wikis
       end
-      
+
     end
   
-  end
+   end
 
 
   def index?
