@@ -31,11 +31,11 @@ class ChargesController < ApplicationController
  end
 
  def new
-   @stripe_btn_data = {
-     key: "#{ Rails.configuration.stripe[:publishable_key] }",
-     description: "Premium Membership - #{current_user.email}",
-     amount: 150000000
-   }
+   # @stripe_btn_data = {
+   #   key: "#{ Rails.configuration.stripe[:publishable_key] }",
+   #   description: "Premium Membership - #{current_user.email}",
+   #   amount: 150000000
+   # }
  end
 
 

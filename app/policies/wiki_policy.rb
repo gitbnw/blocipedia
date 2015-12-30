@@ -9,8 +9,6 @@ class WikiPolicy < ApplicationPolicy
 
    class Scope < Scope
 
-
-
      def resolve
        wikis = []
        if user.role == 'admin'
@@ -32,15 +30,8 @@ class WikiPolicy < ApplicationPolicy
          end
        end
        wikis # return the wikis array we've built up
-       #raise wikis.inspect
+
      end
-
-        # ws = ws.to_a
-        # wikis = ws
-        # wikis
-      # end
-
-    # end
 
    end
 
@@ -50,7 +41,13 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin? || user.premium? or not wiki.private?
+    
+    collabs = []
+    wiki.collaborators.each do |collaborator|
+      collabs << collaborator.user_id
+    end
+    
+    user.admin? || wiki.user == user || collabs.include?(user.id) or not wiki.private? 
   end
 
   def create?
@@ -62,7 +59,14 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || user.premium? or not wiki.private?
+    
+    collabs = []
+    wiki.collaborators.each do |collaborator|
+      collabs << collaborator.user_id
+    end
+    
+    user.admin? || wiki.user == user || collabs.include?(user.id) or not wiki.private? 
+    
   end
 
   def edit?
