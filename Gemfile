@@ -45,5 +45,3 @@ gem "font-awesome-rails"
 
 gem "redcarpet"
 
-gem "arel"
-

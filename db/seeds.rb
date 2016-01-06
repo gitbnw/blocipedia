@@ -32,11 +32,11 @@ user_id = User.pluck(:id).shuffle[0]
 user = User.where(id: user_id)
 
 wiki_id = Wiki.pluck(:id).shuffle[0]
-wiki = Wiki.where(id: wiki_id).update(private: true)
+wiki = Wiki.update(wiki_id, private: true)
 
 
    Collaborator.create!(
-    wiki: wiki.first,
+    wiki: wiki,
     user: user.first
     )
  end
