@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
  # Create Wikis
- 50.times do
+ 25.times do
 
   password = Faker::Internet.password
   user = User.new(
@@ -18,8 +18,8 @@
   user.skip_confirmation!
   user.save!
 
-paragraphs = Faker::Lorem.paragraphs
-title = Faker::Lorem.word
+paragraphs = Faker::Hipster.paragraphs(rand(12..24))
+title = Faker::Hipster.word
 
    Wiki.create!(
 
@@ -29,15 +29,15 @@ title = Faker::Lorem.word
      user: user
    )
 user_id = User.pluck(:id).shuffle[0]
-user = User.where(id: user_id)
+user = User.find(user_id)
 
 wiki_id = Wiki.pluck(:id).shuffle[0]
-wiki = Wiki.where(id: wiki_id).update(private: true)
-
+wiki = Wiki.find(wiki_id)
+wiki.update(private: true)
 
    Collaborator.create!(
-    wiki: wiki.first,
-    user: user.first
+    wiki: wiki,
+    user: user
     )
  end
 
